@@ -1,0 +1,139 @@
+<resources>
+    <style name="AppTheme" parent="@android:style/Theme.DeviceDefault">
+        <item name="android:windowSwipeToDismiss">false</item>
+    </style>
+
+    <string name="app_name">BrailleÉcran Wear</string>
+
+    <string name="braille_input_settings">Braille Settings</string>
+    <string name="braille_input_method">Braille Input Method</string>
+    <string name="title_activity_braille_imesettings">Configurações BrailleÉcran</string>
+    <string name="subtype_en_US">American English</string>
+    <string name="subtype_pt_BR">Português Brasileiro</string>
+
+    <string name="SendingFullSentence">Você digitou: </string>
+    <string name="suggestions_intro">Sugestões:</string>
+
+    <string name="braille_touch_input_method">Braille Touch</string>
+    <string name="braille_swipe_input_method">Braille Swipe</string>
+    <string name="braille_connect_input_method">Braille Connect</string>
+
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_layout">Layout</string>
+
+    <string name="pref_title_rotate_screen">Girar tela</string>
+    <string name="pref_description_rotate_screen">Se ativada, a tela será rotacionada 90 graus sentido horário.
+    </string>
+
+    <string name="pref_title_dots_layout">Layout dos pontos</string>
+    <string-array name="pref_dots_layout_list">
+        <item>123456</item>
+        <item>123654</item>
+        <item>321456</item>
+        <item>321654</item>
+        <item>456123</item>
+        <item>456321</item>
+        <item>654123</item>
+        <item>654321</item>
+    </string-array>
+    <string-array name="pref_dots_layout_list_values">
+        <item>123456</item>
+        <item>123654</item>
+        <item>321456</item>
+        <item>321654</item>
+        <item>456123</item>
+        <item>456321</item>
+        <item>654123</item>
+        <item>654321</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Interactions -->
+    <string name="pref_header_interactions">Interações do texto</string>
+
+    <string name="pref_title_speak_word_at_space">Falar palavra ao concluí-la</string>
+    <string name="pref_description_speak_word_at_space">Falar palavra anterior ao inserir um espaço ou pontuação.</string>
+
+    <string name="pref_title_word_reading">Ler a palavra durante escrita</string>
+    <string name="pref_description_word_reading">Ler a palavra que está sendo formada ao inserir cada letra.</string>
+
+    <string name="pref_title_space_at_punctuation">Inserir espaço após pontuação</string>
+    <string name="pref_description_space_at_punctuation">Automaticamente insere espaço após pountações.</string>
+
+    <!-- Example settings for Dots -->
+    <string name="pref_header_dots">Pontos</string>
+
+    <string name="pref_title_tone_generator">Gerador de Tons</string>
+    <string name="pref_description_tone_generator">Emitir sons de diferentes tons ao clicar em cada ponto.</string>
+
+    <string name="pref_title_dot_number_speaker">Falar o numero do ponto</string>
+    <string name="pref_description_dot_number_speaker">Para cada clique em um ponto, falar o número correspondente.</string>
+
+    <string name="pref_title_vibration_patterns">Padrões de Vibração</string>
+    <string name="pref_description_vibration_patterns">Vibrar com intensidades diferentes para cada ponto.</string>
+
+
+    <!-- Strings related to punctuation -->
+    <string name="WhiteSpaceSpeech">Espaço.</string>
+    <string name="ExclamationSpeech">Exclamação.</string>
+    <string name="InterrogationSpeech">Interrogação.</string>
+    <string name="CommaSpeech">Vírgula.</string>
+    <string name="SemiColonSpeech">Ponto e vírgula.</string>
+    <string name="ColonSpeech">Dois pontos.</string>
+    <string name="PeriodSpeech">Ponto.</string>
+
+    <!-- Strings related to extra symbols -->
+    <string name="HyphenSpeech">Hífen</string>
+    <string name="AtSpeech">Arroba</string>
+    <string name="BackSlashSpeech">Barra invertida</string>
+    <string name="CedillaCSpeech">C cedilha.</string>
+    <string name="AcuteASpeech">A Agudo.</string>
+    <string name="AcuteESpeech">Ê Agudo.</string>
+    <string name="AcuteISpeech">I Agudo.</string>
+    <string name="AcuteOSpeech">O Agudo.</string>
+    <string name="AcuteUSpeech">U Agudo.</string>
+    <string name="CircumflexASpeech">A circunflexo.</string>
+    <string name="CircumflexESpeech">Ê Circunflexo.</string>
+    <string name="CircumflexOSpeech">O Circunflexo.</string>
+    <string name="TildeOSpeech">O til.</string>
+    <string name="TildeASpeech">A til.</string>
+    <string name="CrasisASpeech">A Craseado.</string>
+    <string name="DolarSignSpeech">Cifrão.</string>
+    <string name="QuotationMarkSpeech">Aspas.</string>
+    <string name="AsteriskSpeech">Asterisco.</string>
+    <string name="fixedMessage">Corrigido para:</string>
+    <string name="canceled">Cancelado</string>
+    <string name="navigation_mode_intro">Modo de Navegação</string>
+    <string name="deleted">apagado.</string>
+    <string name="ActivatedDots">Pontos ativados:</string>
+    <string name="EmptyMessage">Nada foi digitado.</string>
+    <string name="MessageSent">Mensagem enviada.</string>
+    <string name="NoActiveDots">Nenhum ponto ativado.</string>
+    <string name="InvalidCharacterAlert">Caractere inválido.</string>
+    <string name="NumericCharacterAlert">Número</string>
+    <string name="CapitalLetterCharacterAlert">Maiúscula</string>
+    <string name="set_layout_screen">Set Layout Scree</string>
+    <string name="topLeftCorner">Canto Superior Esquerdo.</string>
+    <string name="middleLeftCorner">Meio à esquerda.</string>
+    <string name="middleRightCorner">Meio à Direita.</string>
+    <string name="bottomLeftCorner">Canto Inferior Esquerdo</string>
+    <string name="topRightCorner">Canto Superior Direito</string>
+    <string name="bottomRightCorner">Canto Inferior Direito.</string>
+    <string name="regionWithoutDotsSpeech">Região sem pontos. Tente novamente.</string>
+    <string name="alreadyDefinedCornerSpeech">Canto já definido para outro ponto. Tente novamente.</string>
+    <string name="layoutSettingFinishedSpeech">Configuração dos pontos a cela Braille concluída.</string>
+    <string name="setLayoutIntro">Cofiguração da distribuição dos pontos da cela Braille.</string>
+    <string name="setDot1Instruction">Clique em uma região próxima da borda onde deverá ficar o ponto 1.</string>
+    <string name="setDot2Instruction">Ok. Agora clique na região onde deverá ficar o ponto 2.</string>
+    <string name="setDot3Instruction">Em seguida o ponto 3.</string>
+    <string name="setDot4Instruction">Agora, definao ponto 4.</string>
+    <string name="setDot5Instruction">Agora, o ponto 5.</string>
+    <string name="setDot6Instruction">Por fim, o ponto 6.</string>
+
+</resources>

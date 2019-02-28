@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="dot_number_speaker"
+        android:title="@string/pref_title_dot_number_speaker"
+        android:summary="@string/pref_description_dot_number_speaker"/>
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="tone_generator"
+        android:title="@string/pref_title_tone_generator"
+        android:summary="@string/pref_description_tone_generator"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="vibration_patterns"
+        android:title="@string/pref_title_vibration_patterns"
+        android:summary="@string/pref_description_vibration_patterns"/>
+
+</PreferenceScreen>

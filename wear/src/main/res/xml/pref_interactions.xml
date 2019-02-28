@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="word_reading"
+        android:title="@string/pref_title_word_reading"
+        android:summary="@string/pref_description_word_reading"/>
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="speak_word_at_space"
+        android:title="@string/pref_title_speak_word_at_space"
+        android:summary="@string/pref_description_speak_word_at_space"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="space_at_punctuation"
+        android:title="@string/pref_title_space_at_punctuation"
+        android:summary="@string/pref_description_space_at_punctuation"/>
+
+</PreferenceScreen>

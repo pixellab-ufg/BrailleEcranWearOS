@@ -1,0 +1,20 @@
+<preference-headers
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+    <header
+        android:fragment="com.example.braillecranwear.BrailleIMESettings$LayoutPreferenceFragment"
+        android:icon="@drawable/ic_layout_white_24dp"
+        android:title="@string/pref_header_layout" />
+
+    <header
+        android:fragment="com.example.braillecranwear.BrailleIMESettings$DotsPreferenceFragment"
+        android:icon="@drawable/ic_dots_white_24dp"
+        android:title="@string/pref_header_dots" />
+
+    <header
+        android:fragment="com.example.braillecranwear.BrailleIMESettings$InteractionsPreferenceFragment"
+        android:icon="@drawable/ic_interaction_white_24dp"
+        android:title="@string/pref_header_interactions" />
+
+</preference-headers>
