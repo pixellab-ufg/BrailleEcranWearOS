@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.drm.DrmStore;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
@@ -139,8 +140,6 @@ public class BrailleIME extends InputMethodService
                 .build();
         getNodes();
 
-        cursorPosition = 0;
-
         //Prepares Long Press variables
         longPressRunnable = new Runnable() {
             @Override
@@ -181,9 +180,6 @@ public class BrailleIME extends InputMethodService
                 enterNavigationMode();
             }
         };
-
-        // Create Log File
-        createLogFile();
 
         return keyboardView;
     }
@@ -682,6 +678,36 @@ public class BrailleIME extends InputMethodService
     }
 
     @Override
+    public void onStartInputView(EditorInfo info, boolean restarting) {
+        super.onStartInputView(info, restarting);
+
+
+        // Sets TextToSpeech for feedback
+        tts = new CharacterToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    Log.d("TTS", "TextToSpeech Service Initialized");
+                    isTTSInitialized = true;
+                    tts.setLanguage(Locale.getDefault());
+                }
+            }
+        });
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        if (isScreenRotated) {
+            keyboardView.setRotation(-90f);
+            keyboardView.setTranslationY(-10f);
+            keyboardView.setTranslationX(10f);
+        } else {
+            keyboardView.setRotation(0f);
+            keyboardView.setTranslationY(0f);
+            keyboardView.setTranslationX(0f);
+        }
+        Log.d("STARTING VIEW", "HELLO THERE");
+    }
+
+    @Override
     public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
 
@@ -694,19 +720,12 @@ public class BrailleIME extends InputMethodService
         speakWordAtSpace = preferences.getBoolean("speak_word_at_space", speakWordAtSpace);
         spaceAfterPunctuation = preferences.getBoolean("space_at_punctuation", spaceAfterPunctuation);
 
-        // Sets TextToSpeech for feedback
-        tts = new CharacterToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    Log.d("TTS", "TextToSpeech Service Initialized");
-                    isTTSInitialized = true;
-                    Log.d("TTS Voices", tts.getVoices().toString());
-                    tts.setLanguage(Locale.getDefault());
-                }
-            }
-        });
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        // Resets variables
+        cursorPosition = 0;
+        message = "";
+
+        // Create Log File
+        createLogFile();
 
         Log.d("STARTING", "HELLO THERE");
     }
