@@ -10,11 +10,11 @@ import com.example.braillecranwear.GestureDetectors.Swipe4DirectionsDetector;
 
 public class BrailleTouchIME extends BrailleIME {
 
-    public String method = "touch";
-
     @Override
     public View onCreateInputView() {
         super.onCreateInputView();
+
+        method = "touch";
 
         // Set up touch gesture
         setTouchListener();
@@ -39,9 +39,13 @@ public class BrailleTouchIME extends BrailleIME {
                 for (int i = 0; i < keyboard.ImageDots.length; i++) {
                     if (keyboard.ImageDots[i].isInside((int) event.getX(), (int) event.getY())) {
                         keyboard.toggleDotVisibility(i);
+
+                        addToLog("Double tap inside button", String.valueOf(i), true);
                         return super.onDoubleTapEvent(event);
                     }
                 }
+
+                addToLog("Double tap inside middle region", " - ", true);
                 confirmCharacter();
                 return super.onDoubleTap(event);
             }
@@ -68,6 +72,8 @@ public class BrailleTouchIME extends BrailleIME {
                             if (keyboard.ImageDots[i].isInside((int) event.getX(), (int) event.getY())) {
                                 keyboard.toggleDotVisibility(i);
                                 hasSimpleClicked = true;
+
+                                addToLog("Simple click on Button", String.valueOf(i), keyboard.StateDots[i]);
                                 break;
                             }
                         }

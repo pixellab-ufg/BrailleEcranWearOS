@@ -18,48 +18,57 @@ public class BrailleSwipeIME extends BrailleIME {
     //Flags
     private boolean hasSwiped = false;
     private boolean hasJustLongPressed = false;
-    public String method = "swipe";
 
     @Override
     public View onCreateInputView() {
         super.onCreateInputView();
+
+        method = "swipe";
 
         // Swipe Gesture Detection
         gestureDetector = new GestureDetector(this, new Swipe8DirectionsDetector() {
             @Override
             public void onTopLeftSwipe() {
                 keyboard.toggleDotVisibility(0);
+                addToLog("Swipe towards Button", String.valueOf(0), keyboard.StateDots[0]);
             }
 
             @Override
             public void onTopRightSwipe() {
                 keyboard.toggleDotVisibility(3);
+                addToLog("Swipe towards Button", String.valueOf(3), keyboard.StateDots[3]);
             }
 
             @Override
             public void onMiddleLeftSwipe() {
                 keyboard.toggleDotVisibility(1);
+                addToLog("Swipe towards Button", String.valueOf(1), keyboard.StateDots[1]);
             }
 
             @Override
             public void onMiddleRightSwipe() {
                 keyboard.toggleDotVisibility(4);
+                addToLog("Swipe towards Button", String.valueOf(4), keyboard.StateDots[4]);
             }
 
             @Override
             public void onBottomLeftSwipe() {
                 keyboard.toggleDotVisibility(2);
+                addToLog("Swipe towards Button", String.valueOf(2), keyboard.StateDots[2]);
             }
 
             @Override
             public void onBottomRightSwipe() {
                 keyboard.toggleDotVisibility(5);
+                addToLog("Swipe towards Button", String.valueOf(5), keyboard.StateDots[5]);
             }
 
             @Override
             public boolean onDoubleTap(MotionEvent event) {
-                if (!hasSwiped)
+                if (!hasSwiped){
+                    addToLog("Double tap", " - ", true);
                     confirmCharacter();
+                }
 
                 return super.onDoubleTap(event);
             }
@@ -68,7 +77,7 @@ public class BrailleSwipeIME extends BrailleIME {
         setTouchListener();
 
         for (int i = 0; i < keyboard.ImageDots.length; i++) {
-            // TODO: Prevent key buttons to be clicable here
+            // TODO: Prevent key buttons to be clickable here
         }
 
         return keyboardView;

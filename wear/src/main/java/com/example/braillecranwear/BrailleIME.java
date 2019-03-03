@@ -147,6 +147,7 @@ public class BrailleIME extends InputMethodService
                 if (isLongPressing) {
 //                    onLongPress();
 
+                    vibrator.vibrate(300);
                     isLongPressing = false;
                     hasJustLongPressed = true;
                 }
@@ -171,6 +172,9 @@ public class BrailleIME extends InputMethodService
         twoFingersSwipeListener = new TwoFingersSwipeDetector() {
             @Override
             protected void onTwoFingersSwipeLeft() {
+
+                addToLog("Two fingers swipe left", " - ", true);
+
                 if (message.length() > 0)
                     removeCharacter();
             }
@@ -203,18 +207,13 @@ public class BrailleIME extends InputMethodService
 
     @Override
     public void onPress(int primaryCode) {
-        Log.d("ON PRESS", String.valueOf(primaryCode));
     }
 
     @Override
-    public void onRelease(int primaryCode) {
-        Log.d("ON RELEASE", String.valueOf(primaryCode));
-    }
+    public void onRelease(int primaryCode) {  }
 
     @Override
-    public void onKey(int primaryCode, int[] keyCodes) {
-        Log.d("ON KEY", String.valueOf(primaryCode));
-    }
+    public void onKey(int primaryCode, int[] keyCodes) { }
 
     @Override
     public void onText(CharSequence text) {
@@ -223,21 +222,17 @@ public class BrailleIME extends InputMethodService
 
     @Override
     public void swipeLeft() {
-        Log.d("ON SWIPE", "LEFT");
+
     }
 
     @Override
-    public void swipeRight() {
-        Log.d("ON SWIPE", "RIGHT");
-    }
+    public void swipeRight() {  }
 
     @Override
-    public void swipeDown() {
-        Log.d("ON SWIPE", "DOWN");
-    }
+    public void swipeDown() {  }
 
     @Override
-    public void swipeUp() { Log.d("ON SWIPE", "UP"); }
+    public void swipeUp() {  }
 
     // CONFIRMS THE BRAILLE CELL COMPOSITION
     public void confirmCharacter() {
@@ -334,7 +329,6 @@ public class BrailleIME extends InputMethodService
             isLongLongPressing = true;
             hasJustLongLongPressed = false;
             longLongPressHandler.postDelayed(longLongPressRunnable, longLongPressTimeout);
-
         }
     }
 
@@ -342,6 +336,8 @@ public class BrailleIME extends InputMethodService
     public void onLongPress() {
 //        enterNavigationMode();
         Log.d("FULL MESSAGE OUTPUT: ", message);
+
+        addToLog("Long press", " - ", true);
 
         if (message.length() > 0) {
             tts.speak(getString(R.string.SendingFullSentence) + message, TextToSpeech.QUEUE_FLUSH, null, "Output info");
@@ -377,6 +373,9 @@ public class BrailleIME extends InputMethodService
 
     public void onLongLongPress() {
         Log.d("LONG", "LOOONG LOOONG PRESS");
+
+        addToLog("Long long press", " - ", true);
+
         vibrator.vibrate(600);
         isLongPressing = false;
         hasJustLongPressed = false;
@@ -387,7 +386,6 @@ public class BrailleIME extends InputMethodService
         getCurrentInputConnection().performEditorAction(EditorInfo.IME_ACTION_DONE);
 
         tts.speak(getString(R.string.MessageSent), TextToSpeech.QUEUE_ADD, null, "Message sent.");
-
     }
 
     // WRIST TWIST GESTURES, CALL SUGGESTION LIST
@@ -473,7 +471,7 @@ public class BrailleIME extends InputMethodService
     // CHARACTER DELETING
     protected void removeCharacter() {
         if (cursorPosition <= message.length() && cursorPosition > 0) {
-            tts.speak(tts.getAdaptedText(String.valueOf(message.charAt(cursorPosition -  1))) + " " + getString(R.string.deleted), TextToSpeech.QUEUE_FLUSH, null, "character_deleted");
+            tts.speak(tts.getAdaptedText(String.valueOf(message.charAt(cursorPosition -  1))) + " " + getString(R.string.deleted), TextToSpeech.QUEUE_ADD, null, "character_deleted");
 
             StringBuilder stringBuilder = new StringBuilder(message);
             stringBuilder.deleteCharAt(cursorPosition -1);
@@ -590,7 +588,7 @@ public class BrailleIME extends InputMethodService
             cal = Calendar.getInstance();
             SimpleDateFormat format = new SimpleDateFormat("EEEE_MMMM_d_hh:mm:ss");
 
-            logFile = new File(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath() + "/BÉLOG_" + format.format(cal.getTime()) + ".txt");
+            logFile = new File(this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getPath() + "/BÉLOG_" + format.format(cal.getTime()) + ".csv");
 
             if (!logFile.exists()) {
 
@@ -599,7 +597,7 @@ public class BrailleIME extends InputMethodService
 
                     //BufferedWriter for performance, true to set append to file flag
                     BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
-                    buf.append( "description;appState;wordId;letterId;button;buttonQualifier;buttonState;message;dateDay;dateHour");
+                    buf.append( "description;appState;wordCount;letterCount;button;buttonState;message;dateDay;dateHour;dateMilsecs");
                     buf.newLine();
                     buf.flush();
                     buf.close();
@@ -610,12 +608,12 @@ public class BrailleIME extends InputMethodService
                 }
             }
 
-            addToLog("Instanciado este arquivo de Log", " - ", " - ", true, " - ");
+            addToLog("Instanciado este arquivo de Log", " - ", true);
         }
     }
 
     // Adds strings to the Log File
-    public void addToLog(String description, String button, String buttonQualifier, boolean buttonState, String message)
+    public void addToLog(String description, String button, boolean buttonState)
     {
 
         if (recordLogs && logFile != null) {
@@ -632,14 +630,12 @@ public class BrailleIME extends InputMethodService
                         getCurWordId() + ";" +
                         getCurLetterId() + ";" +
                         button + ";" +
-                        buttonQualifier + ";" +
                         buttonState + ";'" +
                         message + "';" + format.format(cal.getTime()));
                 buf.newLine();
                 buf.flush();
                 buf.close();
 
-                Log.d("STORAGE", "INICIADO MESMO");
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -704,6 +700,9 @@ public class BrailleIME extends InputMethodService
             keyboardView.setTranslationY(0f);
             keyboardView.setTranslationX(0f);
         }
+
+        keyboard.toggleAllDotsOff();
+
         Log.d("STARTING VIEW", "HELLO THERE");
     }
 

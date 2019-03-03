@@ -17,11 +17,12 @@ public class BrailleConnectIME extends BrailleIME {
     //Flags
     private boolean checkOutput = false;
     private boolean isComposingLetter = false;
-    public String method = "connect";
 
     @Override
     public View onCreateInputView() {
         super.onCreateInputView();
+
+        method = "connect";
 
         // Set up touch gesture
         setTouchListener();
@@ -49,9 +50,14 @@ public class BrailleConnectIME extends BrailleIME {
                 for (int i = 0; i < keyboard.ImageDots.length; i++) {
                     if (keyboard.ImageDots[i].isInside((int) event.getX(), (int) event.getY())) {
                         keyboard.toggleDotVisibility(i);
+
+                        addToLog("Double tap inside button", String.valueOf(i), true);
                         return super.onDoubleTapEvent(event);
                     }
                 }
+
+
+                addToLog("Double tap inside middle region", " - ", true);
                 keyboard.toggleAllDotsOff();
                 confirmCharacter();
                 checkOutput = false;
@@ -72,7 +78,7 @@ public class BrailleConnectIME extends BrailleIME {
                 // Handles Long Press with custom timeout
                 handleLongPressDetection(event);
 
-                Log.d("POINTER COUNT", String.valueOf(event.getPointerCount()));
+//                Log.d("POINTER COUNT", String.valueOf(event.getPointerCount()));
 
                 hasJustTwoFingerSwiped = twoFingersSwipeListener.onTouchEvent(event);
 
@@ -94,7 +100,11 @@ public class BrailleConnectIME extends BrailleIME {
                             break;
                         case MotionEvent.ACTION_MOVE:
                             isComposingLetter = true;
-                            vibrator.vibrate(getDistanceRelativeVibration(v, event.getX(), event.getY()));
+
+                            int vibrationTime = getDistanceRelativeVibration(v, event.getX(), event.getY());
+                            if (vibrationTime > 0)
+                                vibrator.vibrate(vibrationTime);
+
                             keyboardView.getWidth();
                             touch_move(x, y);
                             break;
@@ -123,6 +133,8 @@ public class BrailleConnectIME extends BrailleIME {
                                         keyboardView.invalidateAllKeys();
                                         checkOutput = false;
                                         hasJustTwoFingerSwiped = false;
+
+                                        addToLog("Disabled dots due to two finger swipe", String.valueOf(0), keyboard.StateDots[0]);
                                     }
                                 }, 200);
                     }
@@ -134,6 +146,8 @@ public class BrailleConnectIME extends BrailleIME {
 
 
     private void touch_start(float xf, float yf) {
+
+        addToLog("Touch start", String.valueOf(0), keyboard.StateDots[0]);
         touch_move(xf, yf);
     }
     private void touch_move(float xf, float yf) {
@@ -146,40 +160,44 @@ public class BrailleConnectIME extends BrailleIME {
             //Log.d("BUTTON 0", "ENTER REGION!");
             if (!keyboard.StateDots[0]) {
                 keyboard.toggleDotVisibility(0);
-//                this.brailleDots.ButtonDots[0].callOnClick();
+                addToLog("Passed over Button", String.valueOf(0), keyboard.StateDots[0]);
             }
+            isComposingLetter = true;
         } else if (keyboard.ImageDots[1].isInside(x, y)) {
             //Log.d("BUTTON 1", "ENTER REGION!");
             if (!keyboard.StateDots[1]) {
                 keyboard.toggleDotVisibility(1);
-//                this.brailleDots.ButtonDots[1].callOnClick();
+                addToLog("Passed over Button", String.valueOf(1), keyboard.StateDots[1]);
             }
+            isComposingLetter = true;
         } else if (keyboard.ImageDots[2].isInside(x, y)) {
             //Log.d("BUTTON 2", "ENTER REGION!");
             if (!keyboard.StateDots[2]) {
                 keyboard.toggleDotVisibility(2);
-//                this.brailleDots.ButtonDots[2].callOnClick();
+                addToLog("Passed over Button", String.valueOf(2), keyboard.StateDots[2]);
             }
+            isComposingLetter = true;
         } else if (keyboard.ImageDots[3].isInside(x, y)) {
             //Log.d("BUTTON 3", "ENTER REGION!");
             if (!keyboard.StateDots[3]) {
                 keyboard.toggleDotVisibility(3);
-//                this.brailleDots.ButtonDots[3].callOnClick();
+                addToLog("Passed over Button", String.valueOf(3), keyboard.StateDots[3]);
             }
-
+            isComposingLetter = true;
         } else if (keyboard.ImageDots[4].isInside(x, y)) {
             //Log.d("BUTTON 4", "ENTER REGION!");
             if (!keyboard.StateDots[4]) {
                 keyboard.toggleDotVisibility(4);
-//                this.brailleDots.ButtonDots[4].callOnClick();
+                addToLog("Passed over Button", String.valueOf(4), keyboard.StateDots[4]);
             }
-
+            isComposingLetter = true;
         } else if (keyboard.ImageDots[5].isInside(x, y)) {
             //Log.d("BUTTON 5", "ENTER REGION!");
             if (!keyboard.StateDots[5]) {
                 keyboard.toggleDotVisibility(5);
-//                this.brailleDots.ButtonDots[5].callOnClick();
+                addToLog("Passed over Button", String.valueOf(5), keyboard.StateDots[5]);
             }
+            isComposingLetter = true;
         } else {
             isComposingLetter = false;
         }
@@ -196,10 +214,12 @@ public class BrailleConnectIME extends BrailleIME {
             public void run() {
 
                 if (checkOutput) {
+                    addToLog("Touch up", " - ", true);
                     confirmCharacter();
                     checkOutput = false;
                     isComposingLetter = false;
                 }
+
             }
         }, skipTimeout ? 0 : 1200);
 
@@ -216,6 +236,9 @@ public class BrailleConnectIME extends BrailleIME {
 
         // return dist/5;
         // Exponential variation
-        return (int) (dist/(5 + Math.pow(1.03, 2)));
+        if ((dist/(5 + Math.pow(1.03, 2))) > 0)
+            return (int) (dist/(5 + Math.pow(1.03, 2)));
+        else
+            return (int) (-1*(dist/(5 + Math.pow(1.03, 2))));
     }
 }
